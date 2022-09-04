@@ -5,7 +5,7 @@ import { getVideos, deleteVideo } from "../../api/crudRequests";
 import { onAdd } from "../../utils/logic";
 
 import Form from "../Form/Form";
-import PlayListItem from "../PlayList/PlayList";
+import PlayList from "../PlayList/PlayList";
 import YouTubePlayer from "../YouTubePlayer/YouTubePlayer";
 
 import { MainLayout, PlayListContainer } from "./App.styles";
@@ -45,13 +45,21 @@ function App() {
     <MainLayout>
       <PlayListContainer>
         <Form onAdd={onAdd} />
-        <PlayListItem playList={playList} onRemove={onRemoveVideoHandler} />
+        {playList.length > 0 && (
+          <PlayList
+            playList={playList}
+            onRemove={onRemoveVideoHandler}
+            onListChange={setPlayList}
+          />
+        )}
       </PlayListContainer>
-      <YouTubePlayer
-        id={currentVideo && currentVideo.id}
-        videoId={currentVideo ? currentVideo.embedCode : ""}
-        onEnd={onRemoveVideoHandler}
-      />
+      {currentVideo && (
+        <YouTubePlayer
+          id={currentVideo.id}
+          videoId={currentVideo.embedCode}
+          onEnd={onRemoveVideoHandler}
+        />
+      )}
     </MainLayout>
   );
 }
