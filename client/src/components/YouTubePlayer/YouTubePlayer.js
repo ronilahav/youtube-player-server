@@ -10,6 +10,7 @@ const YouTubePlayer = ({ id, videoId, onEnd }) => {
       opts={PLAYER_OPTIONS}
       videoId={videoId}
       onEnd={() => onEnd(id)}
+      onReady={(e) => e.target.playVideo()}
     />
   );
 };
