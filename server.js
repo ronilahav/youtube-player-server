@@ -17,17 +17,14 @@ const server = http.createServer(app);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
-// app.use(express.static(path.join(__dirname, "./client/build")));
+app.use(express.static(path.join(__dirname, "./client/build")));
 
 socketConnection(server);
 
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
-// });
 app.get("/", (req, res) => {
-  res.status(200).send("Hello server is running").end();
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 app.use("/api", videoRouter);
